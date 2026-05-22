@@ -4,6 +4,7 @@
 **/obj/
 *.user
 *.suo
+*.lscache
 .vs/
 appsettings.Development.json
 
