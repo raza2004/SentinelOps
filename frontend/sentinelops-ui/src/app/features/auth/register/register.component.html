@@ -1,0 +1,158 @@
+<div class="register-wrapper">
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-card-title>SentinelOps</mat-card-title>
+      <mat-card-subtitle>Create your account</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <div class="name-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>First Name</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput formControlName="firstName" placeholder="John" />
+            @if (registerForm.get('firstName')?.hasError('required') && registerForm.get('firstName')?.touched) {
+              <mat-error>First name is required.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" placeholder="Doe" />
+            @if (registerForm.get('lastName')?.hasError('required') && registerForm.get('lastName')?.touched) {
+              <mat-error>Last name is required.</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <mat-icon matPrefix>email</mat-icon>
+          <input matInput type="email" formControlName="email" placeholder="you@example.com" />
+          @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+            <mat-error>Email is required.</mat-error>
+          } @else if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
+            <mat-error>Enter a valid email address.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <mat-icon matPrefix>lock</mat-icon>
+          <input matInput type="password" formControlName="password" placeholder="Min. 6 characters" />
+          @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
+            <mat-error>Password is required.</mat-error>
+          } @else if (registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched) {
+            <mat-error>Password must be at least 6 characters.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Role</mat-label>
+          <mat-icon matPrefix>badge</mat-icon>
+          <mat-select formControlName="role">
+            @for (role of roles; track role) {
+              <mat-option [value]="role">{{ role }}</mat-option>
+            }
+          </mat-select>
+          @if (registerForm.get('role')?.hasError('required') && registerForm.get('role')?.touched) {
+            <mat-error>Role is required.</mat-error>
+          }
+        </mat-form-field>
+
+        @if (errorMessage) {
+          <div class="error-message">{{ errorMessage }}</div>
+        }
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="full-width submit-btn"
+          [disabled]="isLoading || registerForm.invalid"
+        >
+          @if (isLoading) {
+            <mat-spinner diameter="20" />
+          } @else {
+            Create Account
+          }
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="center">
+      <span class="login-link">
+        Already have an account?
+        <a routerLink="/auth/login">Sign in</a>
+      </span>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<style>
+  .register-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f5f5f5;
+  }
+
+  .register-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 16px;
+  }
+
+  mat-card-header {
+    margin-bottom: 24px;
+  }
+
+  mat-card-title {
+    font-size: 1.75rem !important;
+    font-weight: 700;
+    color: #1976d2;
+  }
+
+  .name-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .half-width {
+    flex: 1;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .submit-btn {
+    margin-top: 8px;
+    height: 44px;
+  }
+
+  .error-message {
+    color: #d32f2f;
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+  }
+
+  .login-link {
+    font-size: 0.875rem;
+    color: #666;
+  }
+
+  .login-link a {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+</style>

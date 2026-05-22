@@ -1,0 +1,213 @@
+@if (isLoading) {
+  <div class="loading-center">
+    <mat-spinner diameter="48" />
+    <span>Loading incident…</span>
+  </div>
+} @else if (incident) {
+  <div class="detail-layout">
+
+    <!-- ── Left column (70%) ──────────────────────────────────────────────── -->
+    <div class="left-col">
+
+      <!-- Incident header card -->
+      <mat-card class="header-card">
+        <mat-card-content>
+
+          <div class="back-row">
+            <button mat-button (click)="goBack()">
+              <mat-icon>arrow_back</mat-icon>
+              All Incidents
+            </button>
+          </div>
+
+          <h2 class="incident-title">
+            {{ incident.title }}
+            @if (incident.isSlaBreach) {
+              <mat-icon class="sla-icon" matTooltip="SLA Breached">timer_off</mat-icon>
+            }
+          </h2>
+
+          <div class="chip-row">
+            <span class="chip" [ngClass]="getSeverityClass(incident.severity)">
+              {{ getSeverityLabel(incident.severity) }}
+            </span>
+            <span class="chip" [ngClass]="getStatusClass(incident.status)">
+              {{ getStatusLabel(incident.status) }}
+            </span>
+          </div>
+
+          <p class="description">{{ incident.description }}</p>
+
+          <mat-divider />
+
+          <div class="meta-inline">
+            <span class="meta-item">
+              <mat-icon class="meta-icon">person</mat-icon>
+              {{ incident.assignedToName ?? 'Unassigned' }}
+            </span>
+            @if (incident.slaDeadline) {
+              <span class="meta-item" [class.sla-breach-text]="incident.isSlaBreach">
+                <mat-icon class="meta-icon">schedule</mat-icon>
+                SLA: {{ incident.slaDeadline | date:'MMM d, HH:mm' }}
+              </span>
+            }
+          </div>
+
+          <!-- Update status -->
+          <div class="status-update-row">
+            <mat-form-field appearance="outline" class="status-field">
+              <mat-label>Update Status</mat-label>
+              <mat-select [(ngModel)]="selectedStatus">
+                @for (s of statuses; track s.value) {
+                  <mat-option [value]="s.value">{{ s.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary"
+              [disabled]="selectedStatus === incident.status"
+              (click)="updateStatus()">
+              Apply
+            </button>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- AI Analysis card -->
+      <mat-card class="ai-card">
+        <mat-card-header>
+          <mat-card-title class="ai-title">
+            <mat-icon>smart_toy</mat-icon>
+            AI Analysis
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          @if (!incident.aiRootCause && !incident.aiSuggestedFix && !incident.aiSeverityExplanation) {
+            <div class="ai-empty">
+              <p class="ai-empty-text">No AI analysis yet for this incident.</p>
+              <button mat-raised-button color="accent"
+                [disabled]="isAnalyzing"
+                (click)="triggerAiAnalysis()">
+                @if (isAnalyzing) {
+                  <mat-spinner diameter="18" />
+                  &nbsp;Analyzing…
+                } @else {
+                  <mat-icon>psychology</mat-icon>
+                  Analyze with AI
+                }
+              </button>
+            </div>
+          } @else {
+            <div class="ai-results">
+              <div class="ai-section">
+                <h4 class="ai-section-title">
+                  <mat-icon class="ai-section-icon">search</mat-icon>
+                  Root Cause
+                </h4>
+                <p>{{ incident.aiRootCause }}</p>
+              </div>
+
+              <mat-divider />
+
+              <div class="ai-section">
+                <h4 class="ai-section-title">
+                  <mat-icon class="ai-section-icon">build</mat-icon>
+                  Suggested Fix
+                </h4>
+                <p>{{ incident.aiSuggestedFix }}</p>
+              </div>
+
+              <mat-divider />
+
+              <div class="ai-section">
+                <h4 class="ai-section-title">
+                  <mat-icon class="ai-section-icon">info</mat-icon>
+                  Severity Explanation
+                </h4>
+                <p>{{ incident.aiSeverityExplanation }}</p>
+              </div>
+
+              <div class="re-analyze-row">
+                <button mat-stroked-button color="accent"
+                  [disabled]="isAnalyzing"
+                  (click)="triggerAiAnalysis()">
+                  @if (isAnalyzing) {
+                    <mat-spinner diameter="16" />
+                    &nbsp;Analyzing…
+                  } @else {
+                    <mat-icon>refresh</mat-icon>
+                    Re-analyze
+                  }
+                </button>
+              </div>
+            </div>
+          }
+
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+
+    <!-- ── Right column (30%) ─────────────────────────────────────────────── -->
+    <div class="right-col">
+
+      <!-- Metadata card -->
+      <mat-card class="meta-card">
+        <mat-card-header>
+          <mat-card-title class="side-card-title">
+            <mat-icon>info_outline</mat-icon>
+            Details
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <dl class="meta-dl">
+            <dt>Created</dt>
+            <dd>{{ incident.createdAt | date:'MMM d, y, HH:mm' }}</dd>
+            <dt>Updated</dt>
+            <dd>{{ incident.updatedAt | date:'MMM d, y, HH:mm' }}</dd>
+            @if (incident.resolvedAt) {
+              <dt>Resolved</dt>
+              <dd>{{ incident.resolvedAt | date:'MMM d, y, HH:mm' }}</dd>
+            }
+            <dt>Alerts</dt>
+            <dd>{{ incident.alertsCount }}</dd>
+            <dt>Comments</dt>
+            <dd>{{ incident.commentsCount }}</dd>
+          </dl>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Related alerts card -->
+      @if (relatedAlerts.length > 0) {
+        <mat-card class="alerts-card">
+          <mat-card-header>
+            <mat-card-title class="side-card-title">
+              <mat-icon>notifications_active</mat-icon>
+              Related Alerts
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="alert-list">
+              @for (alert of relatedAlerts; track alert.id) {
+                <div class="alert-item">
+                  <span class="alert-item-title">{{ alert.title }}</span>
+                  <span class="chip chip-sm" [ngClass]="getSeverityClass(alert.severity)">
+                    {{ getSeverityLabel(alert.severity) }}
+                  </span>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+
+    </div>
+  </div>
+} @else {
+  <div class="loading-center">
+    <mat-icon class="not-found-icon">search_off</mat-icon>
+    <p>Incident not found.</p>
+    <button mat-button (click)="goBack()">Back to Incidents</button>
+  </div>
+}

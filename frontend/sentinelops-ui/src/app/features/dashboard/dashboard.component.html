@@ -1,0 +1,130 @@
+@if (isLoading) {
+  <div class="loading-center">
+    <mat-spinner diameter="48" />
+    <p>Loading dashboard...</p>
+  </div>
+} @else {
+  <div class="dashboard">
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <mat-card class="stat-card stat-blue">
+        <mat-card-content>
+          <div class="stat-row">
+            <div>
+              <div class="stat-value">{{ stats.totalIncidents }}</div>
+              <div class="stat-label">Total Incidents</div>
+            </div>
+            <mat-icon class="stat-icon">trending_up</mat-icon>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card stat-orange">
+        <mat-card-content>
+          <div class="stat-row">
+            <div>
+              <div class="stat-value">{{ stats.openIncidents }}</div>
+              <div class="stat-label">Open Incidents</div>
+            </div>
+            <mat-icon class="stat-icon">warning</mat-icon>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card stat-red">
+        <mat-card-content>
+          <div class="stat-row">
+            <div>
+              <div class="stat-value">{{ stats.criticalIncidents }}</div>
+              <div class="stat-label">Critical</div>
+            </div>
+            <mat-icon class="stat-icon">error</mat-icon>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card stat-purple">
+        <mat-card-content>
+          <div class="stat-row">
+            <div>
+              <div class="stat-value">{{ stats.slaBreaches }}</div>
+              <div class="stat-label">SLA Breaches</div>
+            </div>
+            <mat-icon class="stat-icon">timer</mat-icon>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Main Content Row -->
+    <div class="content-grid">
+
+      <!-- Recent Incidents -->
+      <mat-card class="content-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>warning</mat-icon>
+            Recent Incidents
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (recentFive.length === 0) {
+            <p class="empty-state">No incidents found.</p>
+          } @else {
+            <div class="incident-list">
+              @for (incident of recentFive; track incident.id) {
+                <div class="incident-row">
+                  <div class="incident-title" [title]="incident.title">
+                    {{ incident.title }}
+                  </div>
+                  <div class="incident-chips">
+                    <span class="chip" [ngClass]="getSeverityClass(incident.severity)">
+                      {{ getSeverityLabel(incident.severity) }}
+                    </span>
+                    <span class="chip" [ngClass]="getStatusClass(incident.status)">
+                      {{ getStatusLabel(incident.status) }}
+                    </span>
+                  </div>
+                  <div class="incident-date">
+                    {{ incident.createdAt | date:'MMM d, HH:mm' }}
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Active Alerts -->
+      <mat-card class="content-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>notifications</mat-icon>
+            Active Alerts
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (activeAlerts.length === 0) {
+            <p class="empty-state">No active alerts.</p>
+          } @else {
+            <div class="alert-list">
+              @for (alert of activeAlerts; track alert.id) {
+                <div class="alert-row">
+                  <div class="alert-info">
+                    <div class="alert-title" [title]="alert.title">{{ alert.title }}</div>
+                    <div class="alert-source">{{ alert.source }}</div>
+                  </div>
+                  <span class="chip" [ngClass]="getSeverityClass(alert.severity)">
+                    {{ getSeverityLabel(alert.severity) }}
+                  </span>
+                </div>
+              }
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+}

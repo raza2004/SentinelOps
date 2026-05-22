@@ -1,0 +1,58 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-shrink: 0;
+}
+
+.toolbar-logo {
+  margin-right: 8px;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 0.875rem;
+  margin-right: 8px;
+  opacity: 0.9;
+}
+
+.sidenav-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+.app-sidenav {
+  width: 220px;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.sidenav-content {
+  padding: 24px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.active-link {
+  background-color: rgba(25, 118, 210, 0.1) !important;
+  color: #1976d2 !important;
+
+  mat-icon {
+    color: #1976d2;
+  }
+}

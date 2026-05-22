@@ -1,0 +1,22 @@
+
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+.vs/
+appsettings.Development.json
+
+# Angular
+**/node_modules/
+frontend/sentinelops-ui/dist/
+frontend/sentinelops-ui/.angular/
+
+# Environment files (never commit secrets)
+**/.env
+**/appsettings.*.json
+!**/appsettings.json
+
+# OS
+.DS_Store
+Thumbs.db

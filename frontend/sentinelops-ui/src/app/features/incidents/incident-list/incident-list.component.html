@@ -1,0 +1,121 @@
+<div class="page-header">
+  <h1 class="page-title">Incidents</h1>
+  <button mat-raised-button color="primary" (click)="openCreateDialog()">
+    <mat-icon>add</mat-icon>
+    New Incident
+  </button>
+</div>
+
+<!-- Filters -->
+<div class="filter-row">
+  <mat-form-field appearance="outline" class="filter-field">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="statusFilter" (selectionChange)="onFilterChange()">
+      <mat-option [value]="null">All Statuses</mat-option>
+      @for (s of statuses; track s.value) {
+        <mat-option [value]="s.value">{{ s.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="filter-field">
+    <mat-label>Severity</mat-label>
+    <mat-select [(ngModel)]="severityFilter" (selectionChange)="onFilterChange()">
+      <mat-option [value]="null">All Severities</mat-option>
+      @for (s of severities; track s.value) {
+        <mat-option [value]="s.value">{{ s.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<!-- Table container -->
+<div class="table-container mat-elevation-z2">
+
+  @if (isLoading) {
+    <div class="spinner-overlay">
+      <mat-spinner diameter="40" />
+    </div>
+  }
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Title -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+      <td mat-cell *matCellDef="let row" class="title-cell"
+          (click)="viewIncident(row.id)">
+        {{ row.title }}
+        @if (row.isSlaBreach) {
+          <mat-icon class="sla-breach-icon" matTooltip="SLA Breached">timer_off</mat-icon>
+        }
+      </td>
+    </ng-container>
+
+    <!-- Severity -->
+    <ng-container matColumnDef="severity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Severity</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="chip" [ngClass]="getSeverityClass(row.severity)">
+          {{ getSeverityLabel(row.severity) }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="chip" [ngClass]="getStatusClass(row.status)">
+          {{ getStatusLabel(row.status) }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Assigned To -->
+    <ng-container matColumnDef="assignedTo">
+      <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.assignedToName ?? '—' }}
+      </td>
+    </ng-container>
+
+    <!-- SLA Deadline -->
+    <ng-container matColumnDef="slaDeadline">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>SLA Deadline</th>
+      <td mat-cell *matCellDef="let row"
+          [class.sla-breached]="row.isSlaBreach">
+        {{ row.slaDeadline ? (row.slaDeadline | date:'MMM d, HH:mm') : '—' }}
+      </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row" class="actions-cell">
+        <button mat-icon-button color="primary"
+          matTooltip="View details"
+          (click)="viewIncident(row.id)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button mat-icon-button color="warn"
+          matTooltip="Delete"
+          (click)="deleteIncident(row.id, $event)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        class="table-row"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+        No incidents found.
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons />
+</div>

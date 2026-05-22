@@ -1,0 +1,107 @@
+<div class="page-header">
+  <h1 class="page-title">Alerts</h1>
+  <button mat-raised-button (click)="loadAlerts()">
+    <mat-icon>refresh</mat-icon>
+    Refresh
+  </button>
+</div>
+
+<div class="table-container mat-elevation-z2">
+
+  @if (isLoading) {
+    <div class="spinner-overlay">
+      <mat-spinner diameter="40" />
+    </div>
+  }
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Title -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+      <td mat-cell *matCellDef="let row" class="title-cell">
+        {{ row.title }}
+      </td>
+    </ng-container>
+
+    <!-- Source -->
+    <ng-container matColumnDef="source">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Source</th>
+      <td mat-cell *matCellDef="let row" class="source-cell">{{ row.source }}</td>
+    </ng-container>
+
+    <!-- Severity -->
+    <ng-container matColumnDef="severity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Severity</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="chip" [ngClass]="getSeverityClass(row.severity)">
+          {{ getSeverityLabel(row.severity) }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="chip" [ngClass]="getStatusClass(row.status)">
+          {{ getStatusLabel(row.status) }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Metric -->
+    <ng-container matColumnDef="metric">
+      <th mat-header-cell *matHeaderCellDef>Metric</th>
+      <td mat-cell *matCellDef="let row" class="metric-cell">
+        @if (row.metricValue !== null && row.threshold !== null) {
+          <span [class.metric-exceeded]="row.metricValue > row.threshold">
+            {{ row.metricValue | number:'1.0-2' }} / {{ row.threshold | number:'1.0-2' }}
+          </span>
+        } @else {
+          <span class="muted">—</span>
+        }
+      </td>
+    </ng-container>
+
+    <!-- Created At -->
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+      <td mat-cell *matCellDef="let row" class="date-cell">
+        {{ row.createdAt | date:'MMM d, HH:mm' }}
+      </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row" class="actions-cell">
+        @if (row.status === 0) {
+          <button mat-icon-button color="primary"
+            matTooltip="Acknowledge"
+            (click)="acknowledgeAlert(row.id, $event)">
+            <mat-icon>check_circle_outline</mat-icon>
+          </button>
+        }
+        @if (row.incidentId) {
+          <button mat-icon-button color="accent"
+            matTooltip="View linked incident"
+            (click)="viewLinkedIncident(row.incidentId)">
+            <mat-icon>open_in_new</mat-icon>
+          </button>
+        }
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+        No alerts found.
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons />
+</div>

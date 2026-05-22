@@ -1,0 +1,92 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.table-container {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+
+  table { width: 100%; }
+}
+
+.spinner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+}
+
+.title-cell {
+  font-weight: 500;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.source-cell {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.date-cell {
+  font-size: 0.85rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+.metric-cell {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.metric-exceeded {
+  color: #c62828;
+  font-weight: 500;
+}
+
+.muted { color: #bbb; }
+
+.actions-cell { white-space: nowrap; }
+
+.table-row {
+  &:hover { background: #f9f9f9; }
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px 0;
+  color: #999;
+}
+
+// ── Chips ─────────────────────────────────────────────────────────────────────
+.chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.chip-critical     { background: #ffebee; color: #c62828; }
+.chip-high         { background: #fff3e0; color: #e65100; }
+.chip-medium       { background: #fffde7; color: #f57f17; }
+.chip-low          { background: #e8f5e9; color: #2e7d32; }
+.chip-active       { background: #ffebee; color: #b71c1c; }
+.chip-acknowledged { background: #f3e5f5; color: #6a1b9a; }
+.chip-resolved     { background: #e8f5e9; color: #2e7d32; }
+.chip-suppressed   { background: #f5f5f5; color: #616161; }

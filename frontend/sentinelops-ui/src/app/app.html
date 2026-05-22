@@ -1,0 +1,53 @@
+@if (isLoggedIn) {
+  <div class="app-shell">
+    <mat-toolbar color="primary" class="app-toolbar">
+      <mat-icon class="toolbar-logo">shield</mat-icon>
+      <span class="app-title">SentinelOps</span>
+      <span class="toolbar-spacer"></span>
+      <span class="user-name">{{ currentUserName }}</span>
+      <button mat-icon-button (click)="logout()" title="Logout">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav mode="side" opened class="app-sidenav">
+        <mat-nav-list>
+          <a
+            mat-list-item
+            routerLink="/dashboard"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            <span matListItemTitle>Dashboard</span>
+          </a>
+
+          <a
+            mat-list-item
+            routerLink="/incidents"
+            routerLinkActive="active-link"
+          >
+            <mat-icon matListItemIcon>warning</mat-icon>
+            <span matListItemTitle>Incidents</span>
+          </a>
+
+          <a
+            mat-list-item
+            routerLink="/alerts"
+            routerLinkActive="active-link"
+          >
+            <mat-icon matListItemIcon>notifications</mat-icon>
+            <span matListItemTitle>Alerts</span>
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content class="sidenav-content">
+        <router-outlet />
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+} @else {
+  <router-outlet />
+}

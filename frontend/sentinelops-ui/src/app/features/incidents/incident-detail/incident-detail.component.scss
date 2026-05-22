@@ -1,0 +1,261 @@
+.loading-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 16px;
+  color: #666;
+}
+
+.not-found-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: #bbb;
+}
+
+// ── Two-column layout ──────────────────────────────────────────────────────────
+.detail-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
+.left-col {
+  flex: 0 0 68%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right-col {
+  flex: 0 0 calc(32% - 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// ── Header card ───────────────────────────────────────────────────────────────
+.header-card {
+  mat-card-content { padding: 20px !important; }
+}
+
+.back-row {
+  margin-bottom: 8px;
+
+  button { color: #666; }
+}
+
+.incident-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sla-icon {
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  color: #c62828;
+}
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.description {
+  color: #444;
+  line-height: 1.6;
+  margin: 16px 0;
+}
+
+.meta-inline {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 12px 0;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.meta-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: #888;
+}
+
+.sla-breach-text {
+  color: #c62828;
+  font-weight: 500;
+}
+
+.status-update-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.status-field {
+  min-width: 200px;
+}
+
+// ── AI card ───────────────────────────────────────────────────────────────────
+.ai-card {
+  mat-card-content { padding: 20px !important; }
+}
+
+.ai-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem !important;
+}
+
+.ai-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.ai-empty-text {
+  color: #999;
+  margin: 0;
+}
+
+.ai-results {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ai-section {
+  padding: 4px 0;
+}
+
+.ai-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px;
+}
+
+.ai-section-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: #1976d2;
+}
+
+.re-analyze-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+
+// ── Side cards ────────────────────────────────────────────────────────────────
+.side-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem !important;
+}
+
+.meta-card, .alerts-card {
+  mat-card-content { padding: 16px !important; }
+}
+
+.meta-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  margin: 0;
+
+  dt {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    align-self: start;
+    padding-top: 2px;
+  }
+
+  dd {
+    font-size: 0.875rem;
+    color: #333;
+    margin: 0;
+  }
+}
+
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child { border-bottom: none; }
+}
+
+.alert-item-title {
+  font-size: 0.8rem;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ── Chips ─────────────────────────────────────────────────────────────────────
+.chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.chip-sm {
+  padding: 1px 8px;
+  font-size: 0.7rem;
+}
+
+.chip-critical     { background: #ffebee; color: #c62828; }
+.chip-high         { background: #fff3e0; color: #e65100; }
+.chip-medium       { background: #fffde7; color: #f57f17; }
+.chip-low          { background: #e8f5e9; color: #2e7d32; }
+.chip-open         { background: #e3f2fd; color: #1565c0; }
+.chip-acknowledged { background: #f3e5f5; color: #6a1b9a; }
+.chip-investigating{ background: #fff3e0; color: #e65100; }
+.chip-resolved     { background: #e8f5e9; color: #2e7d32; }
+.chip-closed       { background: #f5f5f5; color: #616161; }

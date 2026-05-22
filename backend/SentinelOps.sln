@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentinelOps.Domain", "SentinelOps.Domain\SentinelOps.Domain.csproj", "{63962032-6830-4335-B8A1-686034DA9A5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentinelOps.Application", "SentinelOps.Application\SentinelOps.Application.csproj", "{2091C308-1693-4B16-9351-11EA1572BC01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentinelOps.Infrastructure", "SentinelOps.Infrastructure\SentinelOps.Infrastructure.csproj", "{EC706C8B-E2A9-487F-96D2-6CC6D503CE7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentinelOps.API", "SentinelOps.API\SentinelOps.API.csproj", "{73F87143-78B9-44F7-BC76-03818EA8C3B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentinelOps.Workers", "SentinelOps.Workers\SentinelOps.Workers.csproj", "{732B8610-80C9-4890-902F-366E69AAD841}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63962032-6830-4335-B8A1-686034DA9A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63962032-6830-4335-B8A1-686034DA9A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63962032-6830-4335-B8A1-686034DA9A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63962032-6830-4335-B8A1-686034DA9A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2091C308-1693-4B16-9351-11EA1572BC01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2091C308-1693-4B16-9351-11EA1572BC01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2091C308-1693-4B16-9351-11EA1572BC01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2091C308-1693-4B16-9351-11EA1572BC01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC706C8B-E2A9-487F-96D2-6CC6D503CE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC706C8B-E2A9-487F-96D2-6CC6D503CE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC706C8B-E2A9-487F-96D2-6CC6D503CE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC706C8B-E2A9-487F-96D2-6CC6D503CE7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73F87143-78B9-44F7-BC76-03818EA8C3B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F87143-78B9-44F7-BC76-03818EA8C3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F87143-78B9-44F7-BC76-03818EA8C3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F87143-78B9-44F7-BC76-03818EA8C3B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{732B8610-80C9-4890-902F-366E69AAD841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{732B8610-80C9-4890-902F-366E69AAD841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{732B8610-80C9-4890-902F-366E69AAD841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{732B8610-80C9-4890-902F-366E69AAD841}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
