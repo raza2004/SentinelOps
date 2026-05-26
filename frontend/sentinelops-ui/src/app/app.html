@@ -1,4 +1,4 @@
-@if (isLoggedIn) {
+@if (isLoggedIn && !isLandingRoute) {
   <div class="app-shell">
     <mat-toolbar color="primary" class="app-toolbar">
       <mat-icon class="toolbar-logo">shield</mat-icon>
@@ -51,3 +51,4 @@
 } @else {
   <router-outlet />
 }
+

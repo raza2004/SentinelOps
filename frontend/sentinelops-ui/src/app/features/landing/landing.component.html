@@ -1,0 +1,160 @@
+<div class="landing">
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <mat-icon class="nav-icon">shield</mat-icon>
+      <span>SentinelOps</span>
+    </div>
+    <div class="nav-actions">
+      <a mat-button routerLink="/auth/login">Sign In</a>
+      <a mat-raised-button color="primary" routerLink="/auth/register">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">AI-Powered Platform</div>
+      <h1 class="hero-title">
+        Incident management<br>that actually thinks
+      </h1>
+      <p class="hero-subtitle">
+        SentinelOps brings your alerts, incidents, and on-call workflows into one place.
+        When something breaks, GPT-4o tells you why and how to fix it — before you even open a terminal.
+      </p>
+      <div class="hero-cta">
+        <a mat-raised-button color="primary" class="cta-primary" routerLink="/auth/register">
+          Start for free
+          <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+        </a>
+        <a mat-stroked-button class="cta-secondary" routerLink="/auth/login">
+          Sign in to your account
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="mock-dashboard">
+        <div class="mock-bar">
+          <span class="mock-dot red"></span>
+          <span class="mock-dot yellow"></span>
+          <span class="mock-dot green"></span>
+        </div>
+        <div class="mock-stats">
+          <div class="mock-stat blue">
+            <span class="mock-num">24</span>
+            <span class="mock-lbl">Incidents</span>
+          </div>
+          <div class="mock-stat orange">
+            <span class="mock-num">7</span>
+            <span class="mock-lbl">Open</span>
+          </div>
+          <div class="mock-stat red-card">
+            <span class="mock-num">2</span>
+            <span class="mock-lbl">Critical</span>
+          </div>
+          <div class="mock-stat purple">
+            <span class="mock-num">1</span>
+            <span class="mock-lbl">SLA Breach</span>
+          </div>
+        </div>
+        <div class="mock-incident">
+          <div class="mock-incident-row">
+            <span class="mock-title">Database connection pool exhausted</span>
+            <span class="mock-chip red-chip">Critical</span>
+          </div>
+          <div class="mock-ai">
+            <mat-icon class="mock-ai-icon">smart_toy</mat-icon>
+            <span>Root cause: connection leak in worker thread — fix: increase pool size to 50</span>
+          </div>
+        </div>
+        <div class="mock-incident">
+          <div class="mock-incident-row">
+            <span class="mock-title">API p99 latency above threshold</span>
+            <span class="mock-chip orange-chip">High</span>
+          </div>
+          <div class="mock-ai">
+            <mat-icon class="mock-ai-icon">smart_toy</mat-icon>
+            <span>Root cause: N+1 query in /orders endpoint — fix: add eager loading</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <h2 class="section-title">Everything you need when things go wrong</h2>
+    <p class="section-sub">No more war rooms. No more guessing. Just fast answers and clear next steps.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrap blue-wrap">
+          <mat-icon>bolt</mat-icon>
+        </div>
+        <h3>Real-time alerts</h3>
+        <p>Alerts come in the moment they fire. Acknowledge, link to an incident, or suppress — all from one screen.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrap purple-wrap">
+          <mat-icon>psychology</mat-icon>
+        </div>
+        <h3>AI root cause analysis</h3>
+        <p>One click sends your incident to GPT-4o. It reads the context, identifies the cause, and suggests a fix with runbook steps.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrap green-wrap">
+          <mat-icon>timer</mat-icon>
+        </div>
+        <h3>SLA tracking</h3>
+        <p>Set SLA deadlines when you create an incident. The dashboard flags breaches instantly so nothing slips through.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrap orange-wrap">
+          <mat-icon>notifications_active</mat-icon>
+        </div>
+        <h3>Live push updates</h3>
+        <p>SignalR keeps every team member's screen in sync. No refreshing, no polling — status changes appear the moment they happen.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrap red-wrap">
+          <mat-icon>manage_accounts</mat-icon>
+        </div>
+        <h3>Role-based access</h3>
+        <p>Admins, Engineers, and Viewers each see what they need. Assign incidents to specific engineers and track ownership clearly.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-wrap teal-wrap">
+          <mat-icon>timeline</mat-icon>
+        </div>
+        <h3>Full lifecycle tracking</h3>
+        <p>Move incidents from Open through Investigating to Resolved. Every status change is timestamped and auditable.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <h2>Ready to stop flying blind during outages?</h2>
+    <p>Get SentinelOps running in under 5 minutes.</p>
+    <a mat-raised-button class="banner-btn" routerLink="/auth/register">
+      Create your account
+      <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <mat-icon>shield</mat-icon>
+      <span>SentinelOps</span>
+    </div>
+    <p class="footer-copy">Built for engineers who want answers, not noise.</p>
+  </footer>
+
+</div>

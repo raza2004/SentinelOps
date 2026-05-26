@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { forkJoin, Subject, takeUntil } from 'rxjs';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { forkJoin, Subject, takeUntil, catchError, of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
@@ -52,7 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private incidentsService: IncidentsService,
     private alertsService: AlertsService,
     private signalrService: SignalrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private zone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -68,20 +69,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private loadData(): void {
     forkJoin({
-      incidents: this.incidentsService.getIncidents(),
-      alerts: this.alertsService.getAlerts()
+      incidents: this.incidentsService.getIncidents().pipe(catchError(() => of([] as IncidentSummaryDto[]))),
+      alerts: this.alertsService.getAlerts().pipe(catchError(() => of([] as AlertDto[])))
     })
       .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: ({ incidents, alerts }) => {
+      .subscribe(({ incidents, alerts }) => {
+        this.zone.run(() => {
           this.recentIncidents = incidents;
           this.activeAlerts = alerts;
+          this.isLoading = false;
           this.calculateStats();
-          this.isLoading = false;
-        },
-        error: () => {
-          this.isLoading = false;
-        }
+        });
       });
   }
 
@@ -107,15 +105,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const token = this.authService.getToken();
     if (!token) return;
 
-    this.signalrService.startConnection(token).then(() => {
-      this.signalrService.incidentCreated$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => this.loadData());
+    this.signalrService.startConnection(token)
+      .then(() => {
+        this.signalrService.incidentCreated$
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => this.zone.run(() => this.loadData()));
 
-      this.signalrService.alertFired$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => this.loadData());
-    });
+        this.signalrService.alertFired$
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => this.zone.run(() => this.loadData()));
+      })
+      .catch(err => console.warn('SignalR connection failed:', err));
   }
 
   getSeverityClass(severity: Severity): string {

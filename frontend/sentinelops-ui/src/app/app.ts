@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterOutlet, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -24,10 +25,18 @@ import { AuthService } from './core/services/auth.service';
   styleUrl: './app.scss'
 })
 export class App {
+  isLandingRoute = false;
+
   constructor(
     public authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(e => {
+        this.isLandingRoute = (e as NavigationEnd).urlAfterRedirects === '/';
+      });
+  }
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
@@ -39,6 +48,6 @@ export class App {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/']);
   }
 }

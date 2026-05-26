@@ -93,8 +93,10 @@
                   <mat-spinner diameter="18" />
                   &nbsp;Analyzing…
                 } @else {
-                  <mat-icon>psychology</mat-icon>
-                  Analyze with AI
+                  <ng-container>
+                    <mat-icon>psychology</mat-icon>
+                    Analyze with AI
+                  </ng-container>
                 }
               </button>
             </div>
@@ -136,8 +138,10 @@
                     <mat-spinner diameter="16" />
                     &nbsp;Analyzing…
                   } @else {
-                    <mat-icon>refresh</mat-icon>
-                    Re-analyze
+                    <ng-container>
+                      <mat-icon>refresh</mat-icon>
+                      Re-analyze
+                    </ng-container>
                   }
                 </button>
               </div>

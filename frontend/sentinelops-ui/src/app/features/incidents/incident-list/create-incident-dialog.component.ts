@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -73,6 +73,10 @@ import { Severity } from '../../../shared/models/incident.models';
   `
 })
 export class CreateIncidentDialogComponent {
+  private fb = inject(FormBuilder);
+  private dialogRef = inject(MatDialogRef<CreateIncidentDialogComponent>);
+  private incidentsService = inject(IncidentsService);
+
   form = this.fb.group({
     title: ['', [Validators.required, Validators.maxLength(500)]],
     description: ['', [Validators.required, Validators.maxLength(2000)]],
@@ -88,12 +92,6 @@ export class CreateIncidentDialogComponent {
   ];
 
   isSubmitting = false;
-
-  constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<CreateIncidentDialogComponent>,
-    private incidentsService: IncidentsService
-  ) {}
 
   onSubmit(): void {
     if (this.form.invalid) return;

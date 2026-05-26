@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -27,6 +27,10 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   registerForm = this.fb.group({
     firstName: ['', [Validators.required, Validators.maxLength(100)]],
     lastName: ['', [Validators.required, Validators.maxLength(100)]],
@@ -38,12 +42,6 @@ export class RegisterComponent {
   roles = ['Admin', 'Engineer', 'Viewer'];
   isLoading = false;
   errorMessage = '';
-
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {}
 
   onSubmit(): void {
     if (this.registerForm.invalid) return;
